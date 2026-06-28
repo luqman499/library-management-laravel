@@ -38,7 +38,8 @@ class BookController extends Controller
         ]);
 
         $book = Book::create($data);
-        return redirect(route('book.index'));
+        return redirect(route('book.index'))->with('success', 'Product Stored Successfully');
+
     }
 
     /**
@@ -46,7 +47,7 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        $book = Book::find('$id');
+        $book = Book::find($id);
         return view('books.show', ['book' => $book]);
     }
 
@@ -55,24 +56,38 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        $book = Book::find('$id');
-        return view('books.edit', ['book' => '$book']);
+        $book = Book::find($id);
+        return view('books.edit', ['book' => $book]);
 
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Book $book)
+    public function update($id, Request $request)
     {
-        //
+
+        $book = Book::find($id);
+
+        $data = $request->validate([
+            'title' => 'required|string',
+            'author' => 'required|string',
+            'price' => 'required|numeric',
+            'category' => 'required|string'
+
+        ]);
+
+        $book->update($data);
+        return redirect(route('book.index'))->with('success', 'Product Updated Successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Book $book)
+    public function destroy($id)
     {
-        //
+        $book = Book::find($id);
+        $book->delete();
+        return redirect(route('book.index'))->with('success', 'Product Deleted Successfully!');
     }
 }

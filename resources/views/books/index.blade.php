@@ -10,6 +10,8 @@
 
 <body>
     <h1>Index Books</h1>
+    <button> <a href="{{ route('book.create') }}">Creat a New Book</a></button>
+
     <table border="1">
         <tr>
             <th>ID</th>
@@ -32,7 +34,13 @@
                     <div>
                         <a href="{{ route('book.edit', ['book' => $book]) }}">Edit</a>
                         <a href="{{ route('book.show', ['book' => $book]) }}">Show</a>
+                        <form method="POST" action="{{ route('book.destroy', ['book' => $book]) }}">
+                            @csrf
+                            @method('delete')
+                            <button type="submit">Delete</button>
+                        </form>
                     </div>
+
                 </td>
             </tr>
         @endforeach
