@@ -11,7 +11,7 @@
 <body>
     <h1>Create Books</h1>
 
-    <form method="POST" action="{{ route('book.store') }} ">
+    <form method="POST" action="{{ route('book.store') }}" enctype="multipart/form-data">
         @csrf
         <div>
             <label for="Title">Title:</label>
@@ -45,13 +45,13 @@
             @enderror
         </div>
         <br>
-        {{-- <div>
+        <div>
             <label for="image">Upload the Image:</label>
             <input type="file" name="image" id="image">
             @error('image')
                 {{ $message }}
             @enderror
-        </div> --}}
+        </div>
         <br>
 
         <input type="submit" value="Submit The Form">

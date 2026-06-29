@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('author');
             $table->integer('price');
             $table->string('category');
-            // $table->string('cover_image');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

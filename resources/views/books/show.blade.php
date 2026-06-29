@@ -34,6 +34,10 @@
         <h2>Category:</h2>
         <p>{{ $book->category }}</p>
     </div>
+    <div>
+        <h2>Image:</h2>
+        <img src="{{ asset('uploads/books/' . $book->image) }}" alt="{{ $book->title }}" width="100px">
+    </div>
     <br>
 </body>
 

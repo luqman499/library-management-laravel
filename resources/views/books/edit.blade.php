@@ -9,9 +9,9 @@
 </head>
 
 <body>
-    <h1>Create Books</h1>
+    <h1>Edit Books</h1>
 
-    <form method="POST" action="{{ route('book.update', ['book' => $book]) }} ">
+    <form method="POST" action="{{ route('book.update', ['book' => $book]) }} " enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div>
@@ -46,13 +46,14 @@
             @enderror
         </div>
         <br>
-        {{-- <div>
+        <div>
             <label for="image">Upload the Image:</label>
             <input type="file" name="image" id="image">
+            <img src="{{ asset('uploads/books/' . $book->image) }}" width="100px" height="170px">
             @error('image')
                 {{ $message }}
             @enderror
-        </div> --}}
+        </div>
         <br>
 
         <input type="submit" value="Update The Form">

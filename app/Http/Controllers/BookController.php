@@ -12,7 +12,8 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::all();
+        // $books = Book::all();
+        $books = Book::orderBy('created_at', 'desc')->get();
         return view('books.index', ['books' => $books]);
     }
 
@@ -33,9 +34,17 @@ class BookController extends Controller
             'title' => 'required|string',
             'author' => 'required|string',
             'price' => 'required|numeric',
-            'category' => 'required|string'
-
+            'category' => 'required|string',
+            'image' => 'image|mimes:jpeg,png,jpg|max:3048'
         ]);
+
+        if ($request->hasFile('image')) {
+            $image = $request->image;
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/books'), $imageName);
+            $data['image'] = $imageName;
+        }
+
 
         $book = Book::create($data);
         return redirect(route('book.index'))->with('success', 'Product Stored Successfully');
@@ -66,19 +75,34 @@ class BookController extends Controller
      */
     public function update($id, Request $request)
     {
-
         $book = Book::find($id);
 
         $data = $request->validate([
             'title' => 'required|string',
             'author' => 'required|string',
             'price' => 'required|numeric',
-            'category' => 'required|string'
-
+            'category' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:3048'
         ]);
 
+        if ($request->hasFile('image')) {
+            // purani image delete karo
+            if ($book->image) {
+                $oldImage = public_path('uploads/books/' . $book->image);
+                if (file_exists($oldImage)) {
+                    unlink($oldImage);
+                }
+            }
+
+            // nayi image save karo
+            $image = $request->image;
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/books'), $imageName);
+            $data['image'] = $imageName;
+        }
+
         $book->update($data);
-        return redirect(route('book.index'))->with('success', 'Product Updated Successfully');
+        return redirect(route('book.index'))->with('success', 'Book Updated Successfully');
     }
 
     /**

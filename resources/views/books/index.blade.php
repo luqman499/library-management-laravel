@@ -29,7 +29,7 @@
                 <td>{{ $book->author ?? 'N/A' }}</td>
                 <td>{{ $book->price ?? 'N/A' }}</td>
                 <td>{{ $book->category ?? 'N/A' }}</td>
-                <td>{{ $book->image ?? 'N/A' }}</td>
+                <td><img src="{{ asset('uploads/books/' . $book->image) }}" alt="{{ $book->title }}" width="100px"></td>
                 <td>
                     <div>
                         <a href="{{ route('book.edit', ['book' => $book]) }}">Edit</a>
