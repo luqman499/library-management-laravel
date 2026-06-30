@@ -12,7 +12,8 @@ class MemberController extends Controller
      */
     public function index()
     {
-        return view('members.index');
+        $members = Member::orderBy('created_at', 'desc')->get();
+        return view('members.index', ['members' => $members]);
     }
 
     /**
@@ -28,23 +29,42 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'phone' => 'required|string',
+            'address' => 'required|string',
+            'photo' => 'image|mimes:jpeg,png,jpg|max:3048'
+        ]);
+
+        if ($request->hasFile('photo')) {
+            $image = $request->photo;
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/members'), $imageName);
+            $data['photo'] = $imageName;
+        }
+
+        $member = Member::create($data);
+        // return back()->with('success', 'Product Stored Successfully');
+        return redirect(route('member.index'))->with('success', 'Membered Stored Successfully');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Member $member)
+    public function show($id)
     {
-        //
+        $member = Member::find($id);
+        return view('members.show', ['member' => $member]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Member $member)
+    public function edit($id)
     {
-        //
+        $member = Member::find($id);
+        return view('members.edit', ['member' => $member]);
     }
 
     /**
@@ -58,8 +78,11 @@ class MemberController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Member $member)
+    public function destroy($id)
     {
-        //
+        $member = Member::find($id);
+        $member->delete();
+        return redirect(route('member.index'));
+
     }
 }

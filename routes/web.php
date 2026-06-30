@@ -21,3 +21,7 @@ Route::delete('/book/{book}/destory', [BookController::class, 'destroy'])->name(
 //Member Route
 Route::get('/member', [MemberController::class, 'index'])->name('member.index');
 Route::get('/member/create', [MemberController::class, 'create'])->name('member.create');
+Route::post('/member/store', [MemberController::class, 'store'])->name('member.store');
+Route::get('/member/{member}', [MemberController::class, 'show'])->name('member.show');
+Route::get('/member/{member}/edit', [MemberController::class, 'edit'])->name('member.edit');
+Route::delete('/member/{member}/destroy', [MemberController::class, 'destroy'])->name('member.destroy');

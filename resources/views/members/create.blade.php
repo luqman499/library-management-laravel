@@ -11,7 +11,7 @@
 <body>
     <h1>Create Members:</h1>
 
-    <form method="POST" action="{{ route('book.store') }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('member.store') }}" enctype="multipart/form-data">
         @csrf
         <div>
             <label for="Name">Name:</label>
@@ -31,16 +31,16 @@
         <br>
         <div>
             <label for="phone">Phone:</label>
-            <input type="text" name="phone" id="price" placeholder="Phone..." value="{{ old('phone') }}">
+            <input type="tel" name="phone" id="phone" placeholder="Phone..." value="{{ old('phone') }}">
             @error('phone')
                 {{ $message }}
             @enderror
         </div>
         <br>
         <div>
-            <label for="category">Category:</label>
-            <input type="text" name="category" id="category" placeholder="category" value="{{ old('category') }}">
-            @error('category')
+            <label for="address">Category:</label>
+            <input type="text" name="address" id="address" placeholder="address" value="{{ old('address') }}">
+            @error('address')
                 {{ $message }}
             @enderror
         </div>
