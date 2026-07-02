@@ -95,7 +95,7 @@ class MemberController extends Controller
             $image = $request->photo;
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('uploads/members'), $imageName);
-            $data['image'] = $imageName;
+            $data['photo'] = $imageName;
         }
 
         $member->update($data);
