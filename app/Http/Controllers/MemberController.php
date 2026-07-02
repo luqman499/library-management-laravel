@@ -70,9 +70,36 @@ class MemberController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Member $member)
+    public function update($id, Request $request)
     {
-        //
+
+        $member = Member::find($id);
+        $data = $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'phone' => 'required|string',
+            'address' => 'required|string',
+            'photo' => 'image|mimes:jpeg,png,jpg|max:3048'
+        ]);
+
+        if ($request->hasFile('photo')) {
+            // purani image delete karo
+            if ($member->image) {
+                $oldImage = public_path('uploads/members/' . $member->photo);
+                if (file_exists($oldImage)) {
+                    unlink($oldImage);
+                }
+            }
+
+            // nayi image save karo
+            $image = $request->photo;
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/members'), $imageName);
+            $data['image'] = $imageName;
+        }
+
+        $member->update($data);
+        return redirect(route('member.index'))->with('success', 'Members Updated Successfully');
     }
 
     /**

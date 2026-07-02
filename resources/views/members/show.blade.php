@@ -22,21 +22,21 @@
     <br>
     <div>
         <h2>Email:</h2>
-        <p>{{ $book->email }}</p>
+        <p>{{ $member->email }}</p>
     </div>
     <br>
     <div>
         <h2>Phone:</h2>
-        <p>{{ $book->phone }}</p>
+        <p>{{ $member->phone }}</p>
     </div>
     <br>
     <div>
         <h2>Address:</h2>
-        <p>{{ $book->address }}</p>
+        <p>{{ $member->address }}</p>
     </div>
     <div>
         <h2>Photo:</h2>
-        <img src="{{ asset('uploads/members/' . $book->image) }}" alt="{{ $book->name }}" width="100px">
+        <img src="{{ asset('uploads/members/' . $member->photo) }}" alt="{{ $member->name }}" width="100px">
     </div>
     <br>
 </body>
