@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\BorrowRecord;
+use App\Models\Book;
+use App\Models\Member;
 use Illuminate\Http\Request;
 
 class BorrowRecordController extends Controller
@@ -12,7 +13,9 @@ class BorrowRecordController extends Controller
      */
     public function index()
     {
-        //
+        $borrows = BorrowRecord::with(['book', 'member'])->orderBy('created_at', 'desc')->get();
+        return view('borrows.index', ['borrows' => $borrows]);
+
     }
 
     /**
@@ -20,7 +23,13 @@ class BorrowRecordController extends Controller
      */
     public function create()
     {
-        //
+        $books = Book::all();
+        $members = Member::all();
+        return view('borrows.create', [
+            'books' => $books,
+            'members' => $members
+        ]);
+
     }
 
     /**
@@ -28,7 +37,17 @@ class BorrowRecordController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'book_id' => 'required',
+            'member_id' => 'required',
+            'borrow_date' => 'required|date',
+            'return_date' => 'nullable|date'
+        ]);
+
+        BorrowRecord::create($data);
+        return redirect(route('borrow.index'))->with('success', 'Book Borrowed Successfully');
+
+
     }
 
     /**

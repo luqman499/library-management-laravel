@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BorrowRecordController;
 use App\Http\Controllers\MemberController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
@@ -26,3 +27,7 @@ Route::get('/member/{member}', [MemberController::class, 'show'])->name('member.
 Route::get('/member/{member}/edit', [MemberController::class, 'edit'])->name('member.edit');
 Route::put('/member/{member}/update', [MemberController::class, 'update'])->name('member.update');
 Route::delete('/member/{member}/destroy', [MemberController::class, 'destroy'])->name('member.destroy');
+
+
+//Route Borrow Controller
+Route::resource('borrow', BorrowRecordController::class);

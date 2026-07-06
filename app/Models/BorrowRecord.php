@@ -16,5 +16,13 @@ class BorrowRecord extends Model
         return $this->belongsTo(Member::class);
     }
 
+    protected $fillable = [
+        'book_id',
+        'member_id',
+        'borrow_id',
+        'return_date'
+    ];
+
+
 }
 
