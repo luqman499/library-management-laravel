@@ -61,24 +61,34 @@ class BorrowRecordController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(BorrowRecord $borrowRecord)
+    public function edit($id)
     {
-        //
+        $borrow = BorrowRecord::find($id);
+        return view('borrows.edit', ['borrow' => $borrow]);
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, BorrowRecord $borrowRecord)
+    public function update($id, Request $request)
     {
-        //
+        $borrow = BorrowRecord::find($id);
+        $data = $request = $request->validate([
+            'return_date' => 'required|date'
+        ]);
+
+        $borrow->update($data);
+        return redirect(route('borrow.index'))->with('success', 'Book Returned Successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(BorrowRecord $borrowRecord)
+    public function destroy($id)
     {
-        //
+        $borrow = BorrowRecord::find($id);
+        $borrow->delete();
+        return redirect(route('borrow.index'));
     }
 }

@@ -34,6 +34,7 @@
                 <td>{{ $borrow->return_date ?? 'Not Returned' }}</td>
                 <td>
                     <a href="{{ route('borrow.edit', $borrow->id) }}">Edit</a>
+                    <a href="{{ route('borrow.show', $borrow->id) }}">Show</a>
                     <form method="POST" action="{{ route('borrow.destroy', $borrow->id) }}">
                         @csrf
                         @method('DELETE')
