@@ -19,7 +19,7 @@ class BorrowRecord extends Model
     protected $fillable = [
         'book_id',
         'member_id',
-        'borrow_id',
+        'borrow_date',
         'return_date'
     ];
 
