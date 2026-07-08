@@ -53,9 +53,11 @@ class BorrowRecordController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(BorrowRecord $borrowRecord)
+    public function show($id)
     {
-        //
+        $borrow = BorrowRecord::find($id);
+        return view('borrows.show', ['borrow' => $borrow]);
+
     }
 
     /**
