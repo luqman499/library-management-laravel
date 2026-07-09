@@ -4,59 +4,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Add Member — Library</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-    <h1>Create Members:</h1>
+<body class="bg-slate-50 min-h-screen">
 
-    <form method="POST" action="{{ route('member.store') }}" enctype="multipart/form-data">
-        @csrf
-        <div>
-            <label for="Name">Name:</label>
-            <input type="text" name="name" id="name" placeholder="Name..." value="{{ old('name') }}">
-            @error('name')
-                {{ $message }}
-            @enderror
+    <!-- Navbar -->
+    <nav class="bg-white border-b border-slate-200 px-8 py-4 flex items-center justify-between">
+        <span class="text-lg font-semibold text-slate-800 tracking-tight">📚 Library Management</span>
+        <div class="flex gap-6 text-sm font-medium text-slate-500">
+            <a href="{{ route('book.index') }}" class="hover:text-slate-800 transition">Books</a>
+            <a href="{{ route('member.index') }}"
+                class="text-indigo-600 border-b-2 border-indigo-600 pb-0.5">Members</a>
+            <a href="{{ route('borrow.index') }}" class="hover:text-slate-800 transition">Borrow Records</a>
         </div>
-        <br>
-        <div>
-            <label for="Email">Email:</label>
-            <input type="email" name="email" id="email" placeholder="Email..." value="{{ old('email') }}">
-            @error('email')
-                {{ $message }}
-            @enderror
-        </div>
-        <br>
-        <div>
-            <label for="phone">Phone:</label>
-            <input type="tel" name="phone" id="phone" placeholder="Phone..." value="{{ old('phone') }}">
-            @error('phone')
-                {{ $message }}
-            @enderror
-        </div>
-        <br>
-        <div>
-            <label for="address">Category:</label>
-            <input type="text" name="address" id="address" placeholder="address" value="{{ old('address') }}">
-            @error('address')
-                {{ $message }}
-            @enderror
-        </div>
-        <br>
-        <div>
-            <label for="photo">Upload the Image:</label>
-            <input type="file" name="photo" id="photo">
-            @error('photo')
-                {{ $message }}
-            @enderror
-        </div>
-        <br>
+    </nav>
 
-        <input type="submit" value="Submit The Form">
+    <div class="max-w-2xl mx-auto px-6 py-10">
+        <div class="mb-6">
+            <a href="{{ route('member.index') }}" class="text-sm text-slate-400 hover:text-slate-600 transition">← Back
+                to Members</a>
+            <h1 class="text-2xl font-bold text-slate-800 mt-2">Add New Member</h1>
+        </div>
 
-    </form>
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+            <form method="POST" action="{{ route('member.store') }}" enctype="multipart/form-data">
+                @csrf
+
+                <div class="mb-5">
+                    <label class="block text-sm font-medium text-slate-700 mb-1.5">Name</label>
+                    <input type="text" name="name" placeholder="Full name" value="{{ old('name') }}"
+                        class="w-full border border-slate-200 rounded-lg px-3.5 py-2.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                    @error('name')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="mb-5">
+                    <label class="block text-sm font-medium text-slate-700 mb-1.5">Email</label>
+                    <input type="email" name="email" placeholder="email@example.com" value="{{ old('email') }}"
+                        class="w-full border border-slate-200 rounded-lg px-3.5 py-2.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                    @error('email')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 mb-5">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Phone</label>
+                        <input type="tel" name="phone" placeholder="03001234567" value="{{ old('phone') }}"
+                            class="w-full border border-slate-200 rounded-lg px-3.5 py-2.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        @error('phone')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Address</label>
+                        <input type="text" name="address" placeholder="City, Area" value="{{ old('address') }}"
+                            class="w-full border border-slate-200 rounded-lg px-3.5 py-2.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        @error('address')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-slate-700 mb-1.5">Photo</label>
+                    <input type="file" name="photo" accept=".jpg,.jpeg,.png,.webp"
+                        class="w-full text-sm text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-indigo-50 file:text-indigo-600 hover:file:bg-indigo-100">
+                    <p class="text-xs text-slate-400 mt-1">Allowed: JPG, JPEG, PNG, WEBP — Max 3MB</p>
+                    @error('photo')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="flex gap-3">
+                    <button type="submit"
+                        class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition">Save
+                        Member</button>
+                    <a href="{{ route('member.index') }}"
+                        class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium px-5 py-2.5 rounded-lg transition">Cancel</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
 
 </body>
 

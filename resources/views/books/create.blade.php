@@ -21,20 +21,16 @@
     </nav>
 
     <div class="max-w-2xl mx-auto px-6 py-10">
-
-        <!-- Header -->
         <div class="mb-6">
             <a href="{{ route('book.index') }}" class="text-sm text-slate-400 hover:text-slate-600 transition">← Back to
                 Books</a>
             <h1 class="text-2xl font-bold text-slate-800 mt-2">Add New Book</h1>
         </div>
 
-        <!-- Form Card -->
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
             <form method="POST" action="{{ route('book.store') }}" enctype="multipart/form-data">
                 @csrf
 
-                <!-- Title -->
                 <div class="mb-5">
                     <label class="block text-sm font-medium text-slate-700 mb-1.5">Title</label>
                     <input type="text" name="title" placeholder="Book title" value="{{ old('title') }}"
@@ -44,7 +40,6 @@
                     @enderror
                 </div>
 
-                <!-- Author -->
                 <div class="mb-5">
                     <label class="block text-sm font-medium text-slate-700 mb-1.5">Author</label>
                     <input type="text" name="author" placeholder="Author name" value="{{ old('author') }}"
@@ -54,7 +49,6 @@
                     @enderror
                 </div>
 
-                <!-- Price & Category -->
                 <div class="grid grid-cols-2 gap-4 mb-5">
                     <div>
                         <label class="block text-sm font-medium text-slate-700 mb-1.5">Price (Rs.)</label>
@@ -74,26 +68,22 @@
                     </div>
                 </div>
 
-                <!-- Cover Image -->
                 <div class="mb-6">
                     <label class="block text-sm font-medium text-slate-700 mb-1.5">Cover Image</label>
-                    <input type="file" name="image"
+                    <input type="file" name="image" accept=".jpg,.jpeg,.png,.webp"
                         class="w-full text-sm text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-indigo-50 file:text-indigo-600 hover:file:bg-indigo-100">
+                    <p class="text-xs text-slate-400 mt-1">Allowed: JPG, JPEG, PNG — Max 3MB</p>
                     @error('image')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
                 </div>
 
-                <!-- Buttons -->
                 <div class="flex gap-3">
                     <button type="submit"
-                        class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition">
-                        Save Book
-                    </button>
+                        class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition">Save
+                        Book</button>
                     <a href="{{ route('book.index') }}"
-                        class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium px-5 py-2.5 rounded-lg transition">
-                        Cancel
-                    </a>
+                        class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium px-5 py-2.5 rounded-lg transition">Cancel</a>
                 </div>
 
             </form>
