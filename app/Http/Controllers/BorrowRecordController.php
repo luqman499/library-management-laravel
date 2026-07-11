@@ -13,7 +13,7 @@ class BorrowRecordController extends Controller
      */
     public function index()
     {
-        $borrows = BorrowRecord::with(['book', 'member'])->orderBy('created_at', 'desc')->get();
+        $borrows = BorrowRecord::with(['book', 'member'])->orderBy('created_at', 'desc')->paginate(2);
         return view('borrows.index', ['borrows' => $borrows]);
 
     }

@@ -13,7 +13,7 @@ class BookController extends Controller
     public function index()
     {
         // $books = Book::all();
-        $books = Book::orderBy('created_at', 'desc')->paginate(2);
+        $books = Book::orderBy('created_at', 'desc')->paginate(4);
         return view('books.index', ['books' => $books]);
     }
 

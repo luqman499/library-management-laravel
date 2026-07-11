@@ -43,7 +43,6 @@
 
     <div class="max-w-6xl mx-auto px-6 py-10">
 
-        <!-- Header -->
         <div class="flex items-center justify-between mb-6">
             <div>
                 <h1 class="text-2xl font-bold text-slate-800">Books</h1>
@@ -54,7 +53,6 @@
                 Add Book</a>
         </div>
 
-        <!-- Success Alert -->
         @if (session()->has('success'))
             <div id="successAlert"
                 class="flex items-center justify-between bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm px-4 py-3 rounded-lg mb-6">
@@ -64,12 +62,11 @@
             </div>
         @endif
 
-        <!-- Table -->
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
             <table class="w-full text-sm">
                 <thead>
                     <tr class="bg-slate-50 border-b border-slate-200">
-                        <th class="text-left px-5 py-3 text-slate-500 font-medium">ID</th>
+                        <th class="text-left px-5 py-3 text-slate-500 font-medium">#</th>
                         <th class="text-left px-5 py-3 text-slate-500 font-medium">Cover</th>
                         <th class="text-left px-5 py-3 text-slate-500 font-medium">Title</th>
                         <th class="text-left px-5 py-3 text-slate-500 font-medium">Author</th>
@@ -79,17 +76,18 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100">
-                    @foreach ($books as $book)
+                    @foreach ($books as $index => $book)
                         <tr class="hover:bg-slate-50 transition">
-                            <td class="px-5 py-3 text-slate-400">{{ $book->id }}</td>
+                            <td class="px-5 py-3 text-slate-400">{{ $books->firstItem() + $index }}</td>
                             <td class="px-5 py-3">
                                 @if ($book->image)
-                                    <img src="{{ asset('uploads/books/' . $book->image) }}" alt="{{ $book->title }}"
-                                        class="w-10 h-14 object-cover rounded shadow-sm">
+                                    <img src="{{ asset('uploads/books/' . $book->image) }}" alt="{{ $book->name }}"
+                                        class="w-10 h-10 object-cover rounded-full shadow-sm">
                                 @else
                                     <div
-                                        class="w-10 h-14 bg-slate-100 rounded flex items-center justify-center text-slate-300 text-xs">
-                                        N/A</div>
+                                        class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-400 font-semibold text-sm">
+                                        {{ strtoupper(substr($book->title, 0, 1)) }}
+                                    </div>
                                 @endif
                             </td>
                             <td class="px-5 py-3 font-medium text-slate-800">{{ $book->title }}</td>
@@ -125,7 +123,11 @@
                 </div>
             @endif
         </div>
-        {{ $books->links() }}
+
+        <!-- Pagination -->
+        <div class="mt-6">
+            {{ $books->links() }}
+        </div>
     </div>
 
     <script>
