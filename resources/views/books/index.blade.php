@@ -125,6 +125,7 @@
                 </div>
             @endif
         </div>
+        {{ $books->links() }}
     </div>
 
     <script>
