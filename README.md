@@ -1,59 +1,160 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📚 Library Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A full-featured Library Management System built with **Laravel**, designed to manage books, members, and borrow/return records — complete with image uploads and Eloquent relationships.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+##  Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Books Management** — Create, read, update, delete books with cover image upload
+- **Members Management** — Manage library members with photo upload
+- **Borrow & Return Tracking** — Track which member borrowed which book, and when it was returned
+- **Eloquent Relationships** — `hasMany` and `belongsTo` relationships between Books, Members, and Borrow Records
+- **Image Upload** — Upload, update, and auto-delete old images on update
+- **Pagination** — Clean paginated listing for all modules
+- **Custom UI/UX** — Tailwind CSS with custom delete confirmation modals and auto-dismissing success alerts
+- **Form Validation** — Server-side validation with clear error messages
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+##  Tech Stack
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+- **Backend:** Laravel (PHP)
+- **Database:** MySQL
+- **Frontend:** Blade Templating + Tailwind CSS
+- **Image Handling:** Laravel File Storage
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+##  Modules
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+| Module | Description |
+|---|---|
+| **Books** | Title, Author, Price, Category, Cover Image |
+| **Members** | Name, Email, Phone, Address, Photo |
+| **Borrow Records** | Links Books & Members with Borrow/Return dates |
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## ⚙️ Installation
 
-## Contributing
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/library-management-laravel.git
+   cd library-management-laravel
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+2. **Install dependencies**
+   ```bash
+   composer install
+   ```
 
-## Code of Conduct
+3. **Set up environment file**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+4. **Configure database in `.env`**
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=library_management
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
 
-## Security Vulnerabilities
+5. **Run migrations**
+   ```bash
+   php artisan migrate
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+6. **Start the development server**
+   ```bash
+   php artisan serve
+   ```
 
-## License
+7. Visit `http://127.0.0.1:8000/book` in your browser 
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## 🗄️ Database Structure
+
+### Books Table
+- `title`, `author`, `price`, `category`, `image`
+
+### Members Table
+- `name`, `email`, `phone`, `address`, `photo`
+
+### Borrow Records Table
+- `book_id` (foreign key), `member_id` (foreign key), `borrow_date`, `return_date`
+
+---
+
+##  Relationships
+
+```php
+// Book.php
+public function borrowRecords()
+{
+    return $this->hasMany(BorrowRecord::class);
+}
+
+// Member.php
+public function borrowRecords()
+{
+    return $this->hasMany(BorrowRecord::class);
+}
+
+// BorrowRecord.php
+public function book()
+{
+    return $this->belongsTo(Book::class);
+}
+
+public function member()
+{
+    return $this->belongsTo(Member::class);
+}
+```
+
+---
+
+## 📸 Screenshots
+
+> Add your project screenshots here after deployment
+
+---
+
+##  What I Learned
+
+- Building complete CRUD operations from scratch
+- Working with Eloquent relationships (`hasMany`, `belongsTo`)
+- Image upload, update, and deletion handling in Laravel
+- Form validation and error handling
+- Route naming conventions and resource controllers
+- Pagination and eager loading for performance
+- Building clean, responsive UI with Tailwind CSS
+
+---
+
+##  Future Improvements
+
+- [ ] Search and filter functionality
+- [ ] REST API with Laravel Sanctum authentication
+- [ ] Dashboard with statistics (total books, members, active borrows)
+- [ ] Email notifications for due returns
+
+---
+
+## 👤 Author
+
+**Luqman**
+Web Development Learner — building practical projects to become a junior Laravel developer.
+
+---
+
+## 📄 License
+
+This project is open-sourced for learning purposes.
