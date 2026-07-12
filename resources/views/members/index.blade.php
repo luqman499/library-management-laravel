@@ -63,6 +63,24 @@
             </div>
         @endif
 
+        <form method="GET" action="{{ route('member.index') }}" class="mb-6">
+            <div class="flex gap-2">
+                <input type="text" name="search" placeholder="Search by name or email..."
+                    value="{{ request('search') }}"
+                    class="flex-1 border border-slate-200 rounded-lg px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <button type="submit"
+                    class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition">
+                    Search
+                </button>
+                @if (request('search'))
+                    <a href="{{ route('member.index') }}"
+                        class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium px-5 py-2.5 rounded-lg transition">
+                        Clear
+                    </a>
+                @endif
+            </div>
+        </form>
+
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
             <table class="w-full text-sm">
                 <thead>
@@ -84,7 +102,8 @@
                             <td class="px-5 py-3">
                                 @if ($member->photo)
                                     <img src="{{ asset('uploads/members/' . $member->photo) }}"
-                                        alt="{{ $member->name }}" class="w-10 h-10 object-cover rounded-full shadow-sm">
+                                        alt="{{ $member->name }}"
+                                        class="w-10 h-10 object-cover rounded-full shadow-sm">
                                 @else
                                     <div
                                         class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-400 font-semibold text-sm">
@@ -125,6 +144,7 @@
         <!-- Pagination -->
         <div class="mt-6">
             {{ $members->links() }}
+            {{-- {{ $books->appends(['search' => request('search')])->links() }} --}}
         </div>
     </div>
 

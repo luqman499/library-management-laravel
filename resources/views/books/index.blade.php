@@ -145,6 +145,7 @@
         <!-- Pagination -->
         <div class="mt-6">
             {{ $books->links() }}
+            {{-- {{ $books->appends(['search' => request('search')])->links() }} --}}
         </div>
     </div>
 

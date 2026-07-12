@@ -10,9 +10,14 @@ class MemberController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $members = Member::orderBy('created_at', 'desc')->paginate(4);
+        $search = $request->input('search');
+        $members = Member::when($search, function ($query) use ($search) {
+            $query->where('name', 'like', '%' . $search . '%')->orWhere('email', 'like', '%' . $search . '%');
+        })->orderBy('created_at', 'desc')->paginate(3);
+
+        // $members = Member::orderBy('created_at', 'desc')->paginate(4);
         return view('members.index', ['members' => $members]);
     }
 
