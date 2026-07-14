@@ -1,52 +1,116 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+<!DOCTYPE html>
+<html lang="en">
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register — Library Management System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #0f172a;
+            background-image:
+                radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.22) 0%, transparent 38%),
+                radial-gradient(circle at 85% 25%, rgba(99, 102, 241, 0.14) 0%, transparent 38%),
+                radial-gradient(circle at 50% 95%, rgba(245, 158, 11, 0.1) 0%, transparent 38%);
+        }
+
+        .glow {
+            box-shadow: 0 0 40px rgba(99, 102, 241, 0.3);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center px-6 py-8">
+
+    <div class="w-full max-w-sm">
+        <div class="bg-white/[0.06] backdrop-blur-xl border border-white/10 rounded-2xl px-8 py-9">
+
+            <!-- Icon + Title -->
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center mx-auto mb-4 glow">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                </div>
+                <h1 class="text-xl font-bold text-white mb-1">Create your account</h1>
+                <p class="text-slate-400 text-xs">Join to start managing the library</p>
+            </div>
+
+            <!-- Register Form -->
+            <form method="POST" action="{{ route('register') }}">
+                @csrf
+
+                <!-- Name -->
+                <div class="mb-4">
+                    <label for="name" class="block text-xs font-medium text-slate-300 mb-1.5">Name</label>
+                    <input type="text" name="name" id="name" value="{{ old('name') }}" required autofocus
+                        placeholder="Your full name"
+                        class="w-full bg-white/[0.06] border border-white/10 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition">
+                    @error('name')
+                        <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Email -->
+                <div class="mb-4">
+                    <label for="email" class="block text-xs font-medium text-slate-300 mb-1.5">Email</label>
+                    <input type="email" name="email" id="email" value="{{ old('email') }}" required
+                        placeholder="you@example.com"
+                        class="w-full bg-white/[0.06] border border-white/10 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition">
+                    @error('email')
+                        <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Password -->
+                <div class="mb-4">
+                    <label for="password" class="block text-xs font-medium text-slate-300 mb-1.5">Password</label>
+                    <input type="password" name="password" id="password" required placeholder="••••••••"
+                        class="w-full bg-white/[0.06] border border-white/10 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition">
+                    @error('password')
+                        <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="mb-5">
+                    <label for="password_confirmation" class="block text-xs font-medium text-slate-300 mb-1.5">Confirm
+                        Password</label>
+                    <input type="password" name="password_confirmation" id="password_confirmation" required
+                        placeholder="••••••••"
+                        class="w-full bg-white/[0.06] border border-white/10 rounded-lg px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition">
+                    @error('password_confirmation')
+                        <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Submit -->
+                <button type="submit"
+                    class="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium py-2.5 rounded-lg transition">
+                    Create account
+                </button>
+
+            </form>
+
+            <!-- Login Link -->
+            <p class="text-center text-xs text-slate-400 mt-6">
+                Already have an account?
+                <a href="{{ route('login') }}" class="text-indigo-400 hover:text-indigo-300 font-medium transition">
+                    Log in
+                </a>
+            </p>
+
         </div>
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+        <!-- Back to home -->
+        <p class="text-center mt-4">
+            <a href="{{ url('/') }}" class="text-xs text-slate-500 hover:text-slate-300 transition">← Back to
+                home</a>
+        </p>
+    </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+</body>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+</html>
