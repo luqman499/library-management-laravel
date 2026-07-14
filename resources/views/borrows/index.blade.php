@@ -39,7 +39,15 @@
             <a href="{{ route('member.index') }}" class="hover:text-slate-800 transition">Members</a>
             <a href="{{ route('borrow.index') }}" class="text-indigo-600 border-b-2 border-indigo-600 pb-0.5">Borrow
                 Records</a>
+
+            <!-- Logout -->
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="text-red-500 hover:text-red-600">Logout</button>
+            </form>
         </div>
+
+
     </nav>
 
     <div class="max-w-6xl mx-auto px-6 py-10">

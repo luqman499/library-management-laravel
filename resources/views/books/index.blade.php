@@ -45,6 +45,7 @@
                 <button type="submit" class="text-red-500 hover:text-red-600">Logout</button>
             </form>
         </div>
+
     </nav>
 
     <div class="max-w-6xl mx-auto px-6 py-10">
